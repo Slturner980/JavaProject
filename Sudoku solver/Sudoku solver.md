@@ -1,4 +1,4 @@
-// Java program for above approach
+
 public class Suduko {
  
     // N is the size of the 2D matrix   N*N
@@ -124,5 +124,4 @@ public class Suduko {
         else
             System.out.println("No Solution exists");
     }
-    // This is code is contributed by Pradeep Mondal P
 }
