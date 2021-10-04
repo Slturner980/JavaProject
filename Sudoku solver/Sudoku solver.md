@@ -28,65 +28,53 @@
 ********************************************************************************/
 public class Main {
  
-    // N is the size of the 2D matrix   N*N
+    //Initializes array and index
     int []grid = new int[81];
     int index = 0;
 
-    /* Takes a partially filled-in grid and attempts
-    to assign values to all unassigned locations in
-    such a way to meet the requirements for
-    Sudoku solution (non-duplication across rows,
-    columns, and boxes) */
+    // takes array and makes function calls to check
+    // each entry to see if a certain number may be
+    // placed in it.
     static boolean solveSuduko(int []grid, int index)
     {
  
-        /*if we have reached the 8th
-           row and 9th column (0
-           indexed matrix) ,
-           we are returning true to avoid further
-           backtracking       */
+        // should the array rach index 81 (the end of
+        // the array) it will jump out of the function
         if (index == 81)
         {
             return true;
         }    
 
  
-        // Check if the current position
-        // of the grid already
-        // contains value >0, we iterate
-        // for next column
+        // Checks to see if there is already an entry in
+        // the soduko grid and skips over it in case it is
         if (grid[index] != 0)
         {
             return solveSuduko(grid, index + 1);
         }
 
+        //for loop goes through every number 1-9 to place 
+        //a legal entry.
         for (int num = 1; num < 10; num++) {
  
-            // Check if it is safe to place
-            // the num (1-9)  in the
-            // given row ,col ->we move to next column
+            // Function call checks to see if
+            // the entry is legal
             if (legalInput(grid, index, num)) {
  
-                /*  assigning the num in the current
-                (row,col)  position of the grid and
-                assuming our assigned num in the position
-                is correct */
+                // Assigns entry
                 grid[index] = num;
  
-                // Checking for next
-                // possibility with next column
+                // Recursive call to continue onto the next entry
                 if (solveSuduko(grid, index + 1))
                     return true;
             }
-            /* removing the assigned num , since our
-               assumption was wrong , and we go for next
-               assumption with diff num value   */
+            //resets index
             grid[index] = 0;
         }
         return false;
     }
  
-    /* A utility function to print grid */
+    // Prints out the table
     static void print(int[] grid, int index)
     {
         for (int i = 0; i < 81; i = (i +9)) 
@@ -99,33 +87,26 @@ public class Main {
         }
     }
  
-    // Check whether it will be legal
-    // to assign num to the
-    // given row, col
+    // Checks to see if the entry is legal
     static boolean legalInput(int[] grid, int index, int num)
     {
  
-        // Check if we find the same num
-        // in the similar row , we
-        // return false
+        // Row checker
         for (int x = 0; x <= 8; x++)
             if (grid[((index / 9)*9)+x] == num)
                 return false;
  
-        // Check if we find the same num
-        // in the similar column ,
-        // we return false
+        // Colom checker
         for (int x = 0; x <= 8; x++)
             if (grid[index % 9 + 9 * x] == num)
                 return false;
  
-        // Check if we find the same num
-        // in the particular 3*3
-        // matrix, we return false
+        // Finds the Corner of each 3 by 3 subsection
         int indexBoxCornerCol = index % 9 /3 *3;
         int indexBoxCornerRow = index / 27 *27;
         int indexBoxCorner = indexBoxCornerCol + indexBoxCornerRow;
 
+        // Goes through the 3 by 3 box to check for duplicate entries
         for (int i = 0; i < 27; i = i +9)
             for (int j = 0; j < 3; j++)
                 if (grid[indexBoxCorner + i + j] == num)
@@ -134,7 +115,8 @@ public class Main {
         return true;
     }
   
-    // Driver Code
+    // Main driver that makes initial call and original array of the
+    // soduko
     public static void main(String[] args)
     {
         int index = 0;
@@ -155,3 +137,4 @@ public class Main {
     }
     
 }
+
