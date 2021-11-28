@@ -26,9 +26,12 @@
 * Instructions: 
 *              Open this file with VS Code. Hit "Debug Java".
 ********************************************************************************/
+import java.io.BufferedWriter;
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
 
@@ -127,15 +130,18 @@ public class Main {
 
     }
 
+    
 
 
-    public void Sreader(int[] grid,int index)
+
+    public void Sreader(int[] grid,int index) throws IOException
         {
          int count = 0;
             
         try
         {
-            File myObj = new File("testu");
+            BufferedWriter writer = new BufferedWriter (new FileWriter("Times.txt"));
+            File myObj = new File("testCase50000_17.txt");
 
             Scanner myReader = new Scanner(myObj);
 
@@ -151,12 +157,30 @@ public class Main {
                 }
                 
 
-                
+                long startTime = System.currentTimeMillis();
                 solveSuduko(grid, 0);
-                //print(grid, index);
+                long endTime = System.currentTimeMillis();
+
+
+                
+                
+             float timeElapsed = endTime - startTime;
+                
+             String TE = String.valueOf(timeElapsed);
+
+                writer.write(TE);
+                writer.write("\n");
+
+
+                System.out.println("P"+ count +"Solved in milliseconds: " + timeElapsed);
+
+               // print(grid, index);
                 count++;
+                
                
            }
+
+           writer.close();
 
             System.out.print("did " + count + " puzzles :) ");
                 
@@ -169,13 +193,14 @@ public class Main {
 
             }
 
-    
+            
+   
 
     
   
     // Main driver that makes initial call and original array of the
     // soduko
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
 
         
@@ -196,18 +221,18 @@ public class Main {
 
         Main S = new Main();
 
-        long startTime = System.currentTimeMillis();
+        long TotalstartTime = System.currentTimeMillis();
 
         S.Sreader(grid, index);
 
-        long endTime = System.currentTimeMillis();
+        long TotalendTime = System.currentTimeMillis();
  
-        long timeElapsed = endTime - startTime;
+        float TotaltimeElapsed = TotalendTime - TotalstartTime;
 
-        long timeSec = (timeElapsed/1000);
+        float TotaltimeSec = (TotaltimeElapsed/1000);
  
-        System.out.println("Execution time in milliseconds: " + timeElapsed);
-        System.out.println("Execution time in seconds: " + timeSec);
+        System.out.println("Execution time in milliseconds: " + TotaltimeElapsed);
+        System.out.println("Execution time in seconds: " + TotaltimeSec);
         
  
     }
