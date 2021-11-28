@@ -1,7 +1,7 @@
 /******************************************************************************
 * Author:      Daniel Portillo & Sarah Turner
 * Label:       Main
-* Title:       Programing Project
+* Title:       Programming Project
 * Course:      CMPS 4143 
 * Semester:    Fall 2021
 * Date:        10/3/2021
@@ -26,23 +26,22 @@
 * Instructions: 
 *              Open this file with VS Code. Hit "Debug Java".
 ********************************************************************************/
-import java.io.BufferedWriter;
 import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;  // Import this class to handle errors
-import java.util.Scanner; // Import the Scanner class to read text files
-import java.io.FileWriter;
+import java.io.FileNotFoundException;  // Import this classes to handle errors
 import java.io.IOException;
+import java.util.Scanner; // Import the Scanner class to read text files
+import java.io.FileWriter; // File IO
+import java.io.BufferedWriter;
 
 public class Main {
 
     public Main()
     {
         //Initializes array and index
+        //Im not sure why this is here ( Delete comment before turn in) - S
        
     }
  
-    
-    
 
     // takes array and makes function calls to check
     // each entry to see if a certain number may be
@@ -130,33 +129,35 @@ public class Main {
 
     }
 
-    
-
-
+    // SReader Reads Puzzle input, Solves Puzzles, and Output times.
 
     public void Sreader(int[] grid,int index) throws IOException
-        {
-         int count = 0;
+
+    {
+        int count = 0; // Counts how many Puzzles it runs though
             
         try
         {
-            BufferedWriter writer = new BufferedWriter (new FileWriter("Times.txt"));
-            File myObj = new File("testCase50000_17.txt");
+            BufferedWriter writer = new BufferedWriter (new FileWriter("Times.txt"));  // Output for individual solve time for puzzles
 
-            Scanner myReader = new Scanner(myObj);
+            File myObj = new File("testCase50000_17.txt"); // Input for Test Cases
+
+            Scanner TestCaseReader = new Scanner(myObj); // Reads the input
 
 
 
-           while(myReader.hasNext())
+           while(TestCaseReader.hasNext()) // While the input has something in it.
+
            {
+                //Reads one Sudoku board
                 for (int i =0; i < 81; i++) 
                 {
-                    int data = myReader.nextInt();
+                    int data = TestCaseReader.nextInt();
                     
                     grid[i] = data;
                 }
                 
-
+                // Starts individual timer and solve the puzzles
                 long startTime = System.currentTimeMillis();
                 solveSuduko(grid, 0);
                 long endTime = System.currentTimeMillis();
@@ -164,34 +165,36 @@ public class Main {
 
                 
                 
-             float timeElapsed = endTime - startTime;
+                float timeElapsed = endTime - startTime; // total time for one puzzle
                 
-             String TE = String.valueOf(timeElapsed);
+                String TE = String.valueOf(timeElapsed);
 
+                // Output the time for puzzle
                 writer.write(TE);
                 writer.write("\n");
 
 
-                System.out.println("P"+ count +"Solved in milliseconds: " + timeElapsed);
-
+               // System.out.println("P"+ count +"Solved in milliseconds: " + timeElapsed);
                // print(grid, index);
-                count++;
+               // count++;
                 
                
-           }
+            }
 
-           writer.close();
+            writer.close();
 
             System.out.print("did " + count + " puzzles :) ");
                 
-            myReader.close();
+            TestCaseReader.close();
         }
-        catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-         }
 
-            }
+        catch (FileNotFoundException e) 
+        {
+             System.out.println("An error occurred.");
+             e.printStackTrace();
+        }
+
+    }
 
             
    
@@ -199,16 +202,14 @@ public class Main {
     
   
     // Main driver that makes initial call and original array of the
-    // soduko
+    // Sudoku
     public static void main(String[] args) throws IOException
     {
-
-        
-
+        // initialize the grid and index
         int []grid = new int[81];
         int index = 0;
 
-         
+        // test grid
         // int grid[] = {    3, 0, 6, 5, 0, 8, 4, 0, 0 ,
         //                   5, 2, 0, 0, 0, 0, 0, 0, 0 ,
         //                   0, 8, 7, 0, 0, 0, 0, 3, 1 ,
@@ -219,17 +220,17 @@ public class Main {
         //                   0, 0, 0, 0, 0, 0, 0, 7, 4 ,
         //                   0, 0, 5, 2, 0, 6, 3, 0, 0  };
 
-        Main S = new Main();
+        Main S = new Main(); // Make an Object instance
 
-        long TotalstartTime = System.currentTimeMillis();
+        long TotalstartTime = System.currentTimeMillis(); // Starts the total run time
 
         S.Sreader(grid, index);
 
-        long TotalendTime = System.currentTimeMillis();
+        long TotalendTime = System.currentTimeMillis();  // Ends total run time
  
-        float TotaltimeElapsed = TotalendTime - TotalstartTime;
+        float TotaltimeElapsed = TotalendTime - TotalstartTime; // How long the program ran
 
-        float TotaltimeSec = (TotaltimeElapsed/1000);
+        float TotaltimeSec = (TotaltimeElapsed/1000);  // Same in seconds
  
         System.out.println("Execution time in milliseconds: " + TotaltimeElapsed);
         System.out.println("Execution time in seconds: " + TotaltimeSec);
